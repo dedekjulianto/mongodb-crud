@@ -31,17 +31,19 @@ mongodb.connect(URL, (err, client) => {
   //   console.log("insert data succes");
   // });
   //
-  findTodo(db, result => {
-    console.log(result);
-  })
+  // findTodo(db, result => {
+  //   console.log(result);
+  // })
 
   // updateTodo(db, result => {
   //   // console.log(result);
   // })
-
-  deleteTodo(db, result => {
-    // console.log(result);
+  searchTodo(db, result => {
+    console.log(result);
   })
+  // deleteTodo(db, result => {
+  //   // console.log(result);
+  // })
 
   client.close();
 });
@@ -61,6 +63,18 @@ const findTodo = (db, callback) => {
     console.log("All todos");
     callback(result);
   });
+};
+
+const searchTodo = (db, callback) => {
+  db.collection("todos")
+    .findOne(
+          {text: "Code Node.js"},
+      function(err, result) {
+        assert.equal(err, null);
+        console.log("Search");
+        callback(result);
+      }
+    )
 };
 
 const updateTodo = (db, callback) => { // Arrow Function expression
@@ -83,11 +97,11 @@ const updateTodo = (db, callback) => { // Arrow Function expression
 const deleteTodo = (db, callback) => {
   db.collection("todos")
     .deleteOne({
-      text: "Learn MYSQL"
-    },
+        text: "Learn MYSQL"
+      },
       function(err, result) {
-      assert.equal(err, null);
-      console.log("delete...");
-      callback(result);
-    });
+        assert.equal(err, null);
+        console.log("delete...");
+        callback(result);
+      });
 };
